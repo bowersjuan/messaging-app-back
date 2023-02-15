@@ -16,7 +16,7 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(20) UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    image TEXT DEFAULT 'https://thispersondoesnotexist.com/'
+    image TEXT DEFAULT 'https://fakeface.rest/thumb/view?minimum_age=21&maximum_age=40'
 );
 
 -- look up table
