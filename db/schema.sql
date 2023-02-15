@@ -8,15 +8,21 @@ CREATE TABLE messages (
     id SERIAL PRIMARY KEY,
     message TEXT NOT NULL,
     favorite BOOLEAN,
-    sender INT,
-    receiver INT,
-    timeSent TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    time_sent TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(20),
-    image TEXT DEFAULT 'https://thispersondoesnotexist.com/',
-    password VARCHAR(5)
+    username VARCHAR(20) UNIQUE NOT NULL,
+    password TEXT NOT NULL,
+    image TEXT DEFAULT 'https://thispersondoesnotexist.com/'
+);
+
+-- look up table
+DROP TABLE IF EXISTS users_messages;
+CREATE TABLE users_messages (
+    id SERIAL PRIMARY KEY,
+    message_id INT,
+    user_id INT
 );
