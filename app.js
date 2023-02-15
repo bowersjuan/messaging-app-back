@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const messagesController = require('./Controllers/messagesController');
+const usersController = require('./Controllers/usersController')
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/messages', messagesController);
+
+app.use('/users', usersController)
 
 app.get('*', (req, res) => {
   res.status(404).json({ error: 'page not found' });
