@@ -22,7 +22,7 @@ CREATE TABLE users (
 -- look up table
 DROP TABLE IF EXISTS users_messages;
 CREATE TABLE users_messages (
-    id SERIAL PRIMARY KEY,
+    created TIMESTAMP WITH TIME ZONE,
     message_id INT,
     user_id INT
 );
