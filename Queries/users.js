@@ -13,6 +13,14 @@ const getAllUsers = async () => {
   }
 };
 
+const getOneUser = async (id) => {
+  try {
+    const user = await db.one('SELECT * FROM users WHERE id=$1', id);
+  } catch (error) {
+    return error
+  }
+}
+
 const createUser = async (user) => {
   const {username, password} = user;
   try {
@@ -28,14 +36,26 @@ const createUser = async (user) => {
     const newUser = await db.one(
       'INSERT INTO users (username, password) values($1, $2) RETURNING *', [username, hashedPassword]
     );
-
     if (newUser) {
       return newUser
     }
-  
   } catch(error) {
     return error
   }
 }
 
-module.exports = { getAllUsers, createUser };
+const deleteUser = async (id) => {
+  try {
+    const deletedUser = await db.one('DELETE FROM users WHERE id=$1 RETURNING *', id)
+
+    if (deleteUser) {
+      return {
+        username: deletedUser.username
+      };
+    }
+  } catch (error) {
+    return error
+  }
+}
+
+module.exports = { getAllUsers, getOneUser, createUser, deleteUser };
