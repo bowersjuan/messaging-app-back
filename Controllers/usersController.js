@@ -3,6 +3,7 @@ const users = express.Router();
 
 const { getAllUsers, getOneUser, createUser, loginUser, addNewMessageToUser, getAllMessagesForUser, deleteUser } = require('../Queries/users');
 
+// GET ALL USERS
 users.get('/', async (req, res) => {
     const allUsers = await getAllUsers();
     if (allUsers[0]) {
@@ -12,6 +13,7 @@ users.get('/', async (req, res) => {
     }
 })
 
+// GET ONE USER
 users.get('/:id', async (req, res) => {
     const {id} = req.params;
     const user = await getOneUser(id);
@@ -39,9 +41,9 @@ users.post('/login', async (req, res) => {
     const user = await loginUser(req.body);
     if (user.username) {
         const {id, username} = user;
-        res.json({message: "Login successful", id, username})
+        res.status(200).json({message: "Login successful", id, username})
     } else {
-        res.json({message: "User not found"})
+        res.status(500).json({message: "User not found"})
     }
 })
 
@@ -65,11 +67,12 @@ users.post('/:userId/messages/:messageId', async (req, res) => {
     }
 })
 
+// DELETE
 users.delete('/:id', async (req, res) => {
     const {id} = req.params;
     const deletedUser = await deleteUser(id);
     if (deletedUser) {
-        res.status(200).json(usdeletedUserer)
+        res.status(200).json(deletedUser.id)
     } else {
         res.status(500).json({error: "server error"})
     }

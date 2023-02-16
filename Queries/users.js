@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt")
 // packaged used to encrypt a password so it is unintelligible in the database
 const saltRounds = 10;
 
+// GET All USERS
 const getAllUsers = async () => {
   try {
     const allUsers = await db.any('SELECT * FROM users');
@@ -13,6 +14,7 @@ const getAllUsers = async () => {
   }
 };
 
+// GET ONE USER
 const getOneUser = async (id) => {
   try {
     const user = await db.one('SELECT * FROM users WHERE id=$1', id);
@@ -22,7 +24,7 @@ const getOneUser = async (id) => {
   }
 }
 
-//SIGNUP
+// SIGNUP
 const createUser = async (user) => {
   const {username, password} = user;
   try {
@@ -67,7 +69,7 @@ const loginUser = async (user) => {
   }
 }
 
-// ADD MESSAGE TO USER
+// ADD MESSAGE THAT CORRESPONDS TO USER
 const addNewMessageToUser = async (userId, messageId) => {
   try {
     // RETURNS TRUE or NULL
@@ -93,6 +95,7 @@ const getAllMessagesForUser = async (id) => {
   }
 }
 
+// DELETE USER
 const deleteUser = async (id) => {
   try {
     const deletedUser = await db.one('DELETE FROM users WHERE id=$1 RETURNING *', id)
