@@ -43,7 +43,7 @@ users.post('/login', async (req, res) => {
         const {id, username} = user;
         res.status(200).json({message: "Login successful", id, username})
     } else {
-        res.status(500).json({message: "User not found"})
+        res.status(404).json({message: "Incorrect login info"})
     }
 })
 
