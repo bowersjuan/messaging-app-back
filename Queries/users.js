@@ -21,6 +21,7 @@ const getOneUser = async (id) => {
   }
 }
 
+//SIGNUP
 const createUser = async (user) => {
   const {username, password} = user;
   try {
@@ -44,6 +45,27 @@ const createUser = async (user) => {
   }
 }
 
+// LOGIN
+const loginUser = async (user) => {
+  const {password, username} = user;
+  try {
+    const oneUser = await db.one('SELECT * FROM users WHERE username=$1', username);
+
+    if (oneUser) {
+      // RETURNS TRUE OR FALSE
+      const foundUser = await bcrypt.compare(password, oneUser.password)
+
+      if (foundUser) {
+        const {username, id} = oneUser
+        return {username, id}
+      }
+    }
+
+  } catch (error) {
+    return error
+  }
+}
+
 const deleteUser = async (id) => {
   try {
     const deletedUser = await db.one('DELETE FROM users WHERE id=$1 RETURNING *', id)
@@ -58,4 +80,4 @@ const deleteUser = async (id) => {
   }
 }
 
-module.exports = { getAllUsers, getOneUser, createUser, deleteUser };
+module.exports = { getAllUsers, getOneUser, createUser, loginUser, deleteUser };
