@@ -16,6 +16,7 @@ const getAllUsers = async () => {
 const getOneUser = async (id) => {
   try {
     const user = await db.one('SELECT * FROM users WHERE id=$1', id);
+    return user;
   } catch (error) {
     return error
   }
@@ -66,15 +67,28 @@ const loginUser = async (user) => {
   }
 }
 
+// ADD MESSAGE TO USER
 const addNewMessageToUser = async (userId, messageId) => {
   try {
     // RETURNS TRUE or NULL
     const add = await db.none(
-      'INSERT INTO users_bookmarks (user_id, bookmark_id) VALUES ($1, $2)', [userId, messageId]
+      'INSERT INTO users_messages (user_id, message_id) VALUES ($1, $2)', [userId, messageId]
     );
+    console.log(userId, messageId, add)
     return !add;
 
   } catch (error) {
+    return error
+  }
+}
+// GET ALL MESSAGES BY USER
+const getAllMessagesForUser = async (id) => {
+  try {
+    const messagesByUser = await db.any(
+      'SELECT message_id, user_id, message, favorite, time_sent FROM users_messages JOIN users ON users.id = users_messages.user_id JOIN messages ON messages.id = users_messages.message_id WHERE users_messages.user_id = $1', id
+    )
+    return messagesByUser;
+  } catch(error) {
     return error
   }
 }
@@ -93,4 +107,4 @@ const deleteUser = async (id) => {
   }
 }
 
-module.exports = { getAllUsers, getOneUser, createUser, loginUser, addNewMessageToUser, deleteUser };
+module.exports = { getAllUsers, getOneUser, createUser, loginUser, addNewMessageToUser, getAllMessagesForUser, deleteUser };
