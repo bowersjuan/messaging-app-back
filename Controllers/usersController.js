@@ -22,7 +22,7 @@ users.get('/:id', async (req, res) => {
     }
 })
 
-users.post('/signup', async (req, res) => {
+users.post('/new', async (req, res) => {
     const user = await createUser(req.body)
 
     const {id, username} = user;
