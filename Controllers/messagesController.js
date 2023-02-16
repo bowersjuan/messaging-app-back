@@ -3,6 +3,7 @@ const messages = express.Router();
 
 const { getAllMessages, getOneMessages, createMessage, deleteMessage, updateMessage } = require('../Queries/messages');
 
+// GET ALL MESSAGES
 messages.get('/', async (req, res) => {
   const allMessages = await getAllMessages();
   if (allMessages[0]) {
@@ -10,6 +11,7 @@ messages.get('/', async (req, res) => {
   } else res.status(500).json({ error: "server error"});
 });
 
+// GET ONE MESSAGE
 messages.get('/:id', async (req, res) => {
   const {id} = req.params;
   const message = await getOneMessages(id)
@@ -18,6 +20,7 @@ messages.get('/:id', async (req, res) => {
   } else res.status(404).json({error: "message not found"})
 })
 
+// CREATE MESSAGE
 messages.post('/', async (req, res) => {
   try {
     const newMessage = await createMessage(req.body)
@@ -27,6 +30,7 @@ messages.post('/', async (req, res) => {
   }
 })
 
+// DELETE MESSAGE
 messages.delete('/:id', async (req, res) => {
   const { id } = req.params;
   try {
@@ -37,6 +41,7 @@ messages.delete('/:id', async (req, res) => {
   }
 })
 
+// UPDATE MESSAGE
 messages.put('/:id', async (req, res) => {
   const { id } = req.params; 
   try {
