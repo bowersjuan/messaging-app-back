@@ -66,6 +66,19 @@ const loginUser = async (user) => {
   }
 }
 
+const addNewMessageToUser = async (userId, messageId) => {
+  try {
+    // RETURNS TRUE or NULL
+    const add = await db.none(
+      'INSERT INTO users_bookmarks (user_id, bookmark_id) VALUES ($1, $2)', [userId, messageId]
+    );
+    return !add;
+
+  } catch (error) {
+    return error
+  }
+}
+
 const deleteUser = async (id) => {
   try {
     const deletedUser = await db.one('DELETE FROM users WHERE id=$1 RETURNING *', id)
@@ -80,4 +93,4 @@ const deleteUser = async (id) => {
   }
 }
 
-module.exports = { getAllUsers, getOneUser, createUser, loginUser, deleteUser };
+module.exports = { getAllUsers, getOneUser, createUser, loginUser, addNewMessageToUser, deleteUser };

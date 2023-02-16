@@ -1,7 +1,7 @@
 const express = require('express');
 const users = express.Router();
 
-const { getAllUsers, getOneUser, createUser, loginUser, deleteUser } = require('../Queries/users');
+const { getAllUsers, getOneUser, createUser, loginUser, addNewMessageToUser, deleteUser } = require('../Queries/users');
 
 users.get('/', async (req, res) => {
     const allUsers = await getAllUsers();
@@ -42,6 +42,20 @@ users.post('/login', async (req, res) => {
         res.json({message: "Login successful", id, username})
     } else {
         res.json({message: "User not found"})
+    }
+})
+
+users.get('/:userId/messages', async (req, res) => {
+    res.status(200).json()
+})
+
+users.post('/:userId/messages/:messageId', async (req, res) => {
+    const {userId, messageId} = req.params;
+    const succesfulAdd = addNewMessageToUser(userId, messageId)
+    if (succesfulAdd) {
+        res.status(201).json({message: "Message added"})
+    } else {
+        res.json({error: "Message not added"})
     }
 })
 
