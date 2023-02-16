@@ -39,7 +39,7 @@ users.post('/signup', async (req, res) => {
 // LOGIN
 users.post('/login', async (req, res) => {
     const user = await loginUser(req.body);
-    if (user.username) {
+    if (user) {
         const {id, username} = user;
         res.status(200).json({message: "Login successful", id, username})
     } else {
