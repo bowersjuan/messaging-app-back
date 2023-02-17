@@ -1,7 +1,7 @@
 const express = require('express');
 const users = express.Router();
 
-const { getAllUsers, getOneUser, createUser, loginUser, addNewMessageToUser, getAllMessagesForUser, deleteUser } = require('../Queries/users');
+const { getAllUsers, getOneUser, createUser, loginUser, addNewMessageToUser, getAllMessagesForUser, getOneMessagesForUser, deleteUser } = require('../Queries/users');
 
 // GET ALL USERS
 users.get('/', async (req, res) => {
@@ -57,12 +57,20 @@ users.get('/:userId/messages', async (req, res) => {
 })
 
 // GET ONE MESSAGE BY USER
-users.get
+users.get('/:userId/messages/:messageId', async (req, res) => {
+    const {messageId} = req.params; 
+    const message = await getOneMessagesForUser(messageId)
+    if (message) {
+        res.status(200).json(message);
+    } else {
+        res.status(500).json({error: "Message not found"})
+    }
+})
 
 // POST MESSAGE FOR USER
 users.post('/:userId/messages/:messageId', async (req, res) => {
     const {userId, messageId} = req.params;
-    const succesfulAdd = addNewMessageToUser(userId, messageId)
+    const succesfulAdd = await addNewMessageToUser(userId, messageId)
     if (succesfulAdd) {
         res.status(201).json({message: "Message added"})
     } else {

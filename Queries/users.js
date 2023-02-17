@@ -83,6 +83,7 @@ const addNewMessageToUser = async (userId, messageId) => {
     return error
   }
 }
+
 // GET ALL MESSAGES BY USER
 const getAllMessagesForUser = async (id) => {
   try {
@@ -90,6 +91,18 @@ const getAllMessagesForUser = async (id) => {
       'SELECT message_id, user_id, message, favorite, time_sent FROM users_messages JOIN users ON users.id = users_messages.user_id JOIN messages ON messages.id = users_messages.message_id WHERE users_messages.user_id = $1', id
     )
     return messagesByUser;
+  } catch(error) {
+    return error
+  }
+}
+
+// GET ONE MESSAGE BY USER
+const getOneMessagesForUser = async (id) => {
+  try {
+    const messageByUser = await db.one(
+      'SELECT message, favorite, time_sent FROM messages WHERE messages.id = $1', id
+    )
+    return messageByUser;
   } catch(error) {
     return error
   }
@@ -110,4 +123,4 @@ const deleteUser = async (id) => {
   }
 }
 
-module.exports = { getAllUsers, getOneUser, createUser, loginUser, addNewMessageToUser, getAllMessagesForUser, deleteUser };
+module.exports = { getAllUsers, getOneUser, createUser, loginUser, addNewMessageToUser, getAllMessagesForUser, getOneMessagesForUser, deleteUser };
