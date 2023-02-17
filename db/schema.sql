@@ -6,6 +6,7 @@ CREATE DATABASE messages_dev;
 DROP TABLE IF EXISTS messages;
 CREATE TABLE messages (
     id SERIAL PRIMARY KEY,
+    user_id INT,
     message TEXT NOT NULL,
     favorite BOOLEAN,
     time_sent TIMESTAMP DEFAULT CURRENT_TIMESTAMP
