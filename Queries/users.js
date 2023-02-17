@@ -88,7 +88,7 @@ const addNewMessageToUser = async (userId, messageId) => {
 const getAllMessagesForUser = async (id) => {
   try {
     const messagesByUser = await db.any(
-      'SELECT message_id, user_id, message, favorite, time_sent FROM users_messages JOIN users ON users.id = users_messages.user_id JOIN messages ON messages.id = users_messages.message_id WHERE users_messages.user_id = $1', id
+      'SELECT message_id, user_id, sender_id, message, favorite, time_sent FROM users_messages JOIN users ON users.id = users_messages.user_id JOIN messages ON messages.id = users_messages.message_id WHERE users_messages.user_id = $1', id
     )
     return messagesByUser;
   } catch(error) {
