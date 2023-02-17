@@ -100,7 +100,7 @@ const getAllMessagesForUser = async (id) => {
 const getOneMessagesForUser = async (id) => {
   try {
     const messageByUser = await db.one(
-      'SELECT receiver_id, message, favorite, time_sent FROM messages WHERE messages.id = $1', id
+      'SELECT sender_id, message, favorite, time_sent FROM messages WHERE messages.id = $1', id
     )
     return messageByUser;
   } catch(error) {

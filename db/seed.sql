@@ -1,6 +1,6 @@
 \c messages_dev;
 
-INSERT INTO messages (message, favorite, receiver_id) VALUES 
+INSERT INTO messages (message, favorite, sender_id) VALUES 
 ('Hello how are you doing?', false, 2),
 ('Good and you?', false, 1),
 ('Tell Bob to send me the check please', false, 2),
