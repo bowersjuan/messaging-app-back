@@ -4,25 +4,25 @@ const users = express.Router();
 const { getAllUsers, getOneUser, createUser, loginUser, addNewMessageToUser, getAllMessagesForUser, deleteUser } = require('../Queries/users');
 
 // GET ALL USERS
-users.get('/', async (req, res) => {
-    const allUsers = await getAllUsers();
-    if (allUsers[0]) {
-        res.status(200).json(allUsers)
-    } else {
-        res.status(500).json({error: "server error"})
-    }
-})
+// users.get('/', async (req, res) => {
+//     const allUsers = await getAllUsers();
+//     if (allUsers[0]) {
+//         res.status(200).json(allUsers)
+//     } else {
+//         res.status(500).json({error: "server error"})
+//     }
+// })
 
 // GET ONE USER
-users.get('/:id', async (req, res) => {
-    const {id} = req.params;
-    const user = await getOneUser(id);
-    if (user) {
-        res.status(200).json(user)
-    } else {
-        res.status(500).json({error: "server error"})
-    }
-})
+// users.get('/:id', async (req, res) => {
+//     const {id} = req.params;
+//     const user = await getOneUser(id);
+//     if (user) {
+//         res.status(200).json(user)
+//     } else {
+//         res.status(500).json({error: "server error"})
+//     }
+// })
 
 // SIGNUP
 users.post('/signup', async (req, res) => {
@@ -55,6 +55,9 @@ users.get('/:userId/messages', async (req, res) => {
         res.status(200).json(userMessages)
     } else res.status(500).json({error: "Messages not found"})
 })
+
+// GET ONE MESSAGE BY USER
+users.get
 
 // POST MESSAGE FOR USER
 users.post('/:userId/messages/:messageId', async (req, res) => {
