@@ -42,7 +42,7 @@ To Visit Back-End App:
 - List of Messages: `localhost:9999/messages`
 - List of Users: `localhost:9999/users`
 - List of All Messages belonging to a User: `localhost:9999/users/:id/messages`
-- List of a single Message belonging to a User: `localhost:9999/users/:id/messages/:id`
+- Single Message belonging to a User: `localhost:9999/users/:id/messages/:id`
 
 ## Reflection
 
